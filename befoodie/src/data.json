@@ -3,66 +3,77 @@
     "title": "Pizza",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "pizza",
     "price": 123
   },
   {
     "title": "Pizza",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.lorem10 sit amet consectetur adipisicing elit Quis alias.lorem10",
     "image": "burger2.jpeg",
+    "category": "pizza",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "Veg",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "Veg",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "Veg",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "Veg",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "non-veg",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "Non-Veg",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "non-veg",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "NonVeg",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "Dessert",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "Dessert",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "Aessert",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "Dessert",
+    "price": 1123
+  },
+  {
+    "title": "FastFood",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
+    "image": "burger2.jpeg",
+    "category": "FastFood",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "FastFood",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
+    "category": "FastFood",
     "price": 123
   },
   {
-    "title": "Pizza",
+    "title": "Drinks",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
     "image": "burger2.jpeg",
-    "price": 123
-  },
-  {
-    "title": "Pizza",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit Quis alias.",
-    "image": "burger2.jpeg",
+    "category": "Drinks",
     "price": 123
   }
 ]

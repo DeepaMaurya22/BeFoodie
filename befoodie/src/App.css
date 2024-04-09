@@ -4,7 +4,7 @@
   top: 4.1rem;
   left: 0;
   width: 70%;
-  height: 36.1rem;
+  height: 35.3rem;
   background: linear-gradient(
     to right,
     #faeaea,
@@ -12,5 +12,16 @@
     rgb(250, 234, 234, 0.5),
     transparent
   );
-  /* backdrop-filter: blur(1px); */
+}
+.active {
+  @apply text-red underline underline-offset-4;
+}
+.section-container {
+  @apply max-w-screen-2xl container mx-auto xl:px-24 px-4;
+}
+.subtitle {
+  @apply text-center font-medium text-2xl mt-20 text-red;
+}
+.title {
+  @apply text-3xl md:text-4xl font-bold my-2 md:leading-snug leading-snug mb-8 text-center;
 }

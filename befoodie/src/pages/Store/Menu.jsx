@@ -7,39 +7,42 @@ function Menu() {
   const [filteredItems, setFilteredItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("default");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch("../../data.json");
-        // const data = await response.json();
-        // console.log(data);
         setMenu(data);
         setFilteredItems(data);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
 
-  // filtering data based on category
-  const filterdata = (category) => {
-    category === "all"
-      ? menu
-      : menu.filter((item) => item.category === category);
+  useEffect(() => {
+    if (sortOption !== "default") {
+      handleSortChange(sortOption);
+    }
+  }, [sortOption, filteredItems]);
 
-    setFilteredItems(filterdata);
+  const filterDataByCategory = (category) => {
+    const filteredData =
+      category === "all"
+        ? menu
+        : menu.filter((item) => item.category === category);
+    setFilteredItems(filteredData);
     setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
-  // show all data
-  const showall = () => {
+  const showAll = () => {
     setFilteredItems(menu);
     setSelectedCategory("all");
+    setCurrentPage(1);
   };
 
-  // sorting based on a-z, z-a , low to high pricing
   const handleSortChange = (option) => {
     setSortOption(option);
 
@@ -61,14 +64,123 @@ function Menu() {
         break;
     }
     setFilteredItems(sortedItems);
+    setCurrentPage(1);
   };
+
+  // // Pagination Logic
+  const itemsPerPage = 6;
+
+  const totalItems = filteredItems.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const truncatedPages = totalPages > 3 ? 3 : totalPages;
+  const startIndex = currentPage === 1 ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = filteredItems.slice(startIndex, endIndex);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () =>
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  const prevPage = () =>
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+
   return (
-    <div className="grid grid-cols-3 ">
-      {/* category */}
-      {/* cards */}
-      {filteredItems.map((item, index) => (
-        <Card key={index} item={item} />
-      ))}
+    <div>
+      <div className="flex">
+        <div className="section-container flex flex-wrap justify-start md:items-center md:gap-8 gap-4 flex-wrap py-8 ms-20">
+          <button
+            className={selectedCategory === "all" ? "active" : ""}
+            onClick={showAll}
+          >
+            All
+          </button>
+          <button
+            className={selectedCategory === "pizza" ? "active" : ""}
+            onClick={() => filterDataByCategory("pizza")}
+          >
+            Pizza
+          </button>
+          <button
+            className={selectedCategory === "Veg" ? "active" : ""}
+            onClick={() => filterDataByCategory("Veg")}
+          >
+            Veg
+          </button>
+          <button
+            className={selectedCategory === "NonVeg" ? "active" : ""}
+            onClick={() => filterDataByCategory("NonVeg")}
+          >
+            Non-Veg
+          </button>
+          <button
+            className={selectedCategory === "Dessert" ? "active" : ""}
+            onClick={() => filterDataByCategory("Dessert")}
+          >
+            Dessert
+          </button>
+          <button
+            className={selectedCategory === "FastFood" ? "active" : ""}
+            onClick={() => filterDataByCategory("FastFood")}
+          >
+            FastFood
+          </button>
+          <button
+            className={selectedCategory === "Drinks" ? "active" : ""}
+            onClick={() => filterDataByCategory("Drinks")}
+          >
+            Drinks
+          </button>
+
+          {/* Sorting dropdown */}
+          <div className="ms-auto">
+            <select
+              value={sortOption}
+              onChange={(e) => handleSortChange(e.target.value)}
+            >
+              <option value="default" disabled>
+                Sort by
+              </option>
+              <option value="A-Z">A-Z</option>
+              <option value="Z-A">Z-A</option>
+              <option value="low-to-high">Low to High Price</option>
+              <option value="high-to-low">High to Low Price</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      {/* Cards */}
+      <div className="flex flex-wrap gap-8 mx-auto align-middle justify-center">
+        {currentItems.map((item, index) => (
+          <Card key={index} item={item} />
+        ))}
+      </div>
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+        <button onClick={prevPage} disabled={currentPage === 1}>
+          Prev
+        </button>
+        {Array.from({ length: truncatedPages }, (_, i) => {
+          // const pageNumber = i + 1;
+          const pageOffset = Math.max(currentPage - 2, 1); // Ensure current page is visible
+          const currentPageNumber = pageOffset + i;
+          return (
+            <button
+              key={i}
+              onClick={() => paginate(currentPageNumber)}
+              className={`mx-1 px-3 py-1 bg-gray-200 rounded ${
+                currentPage === currentPageNumber
+                  ? "bg-blue-500 text-white"
+                  : ""
+              }`}
+            >
+              {currentPageNumber}
+            </button>
+          );
+        })}
+        <button onClick={nextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div>{" "}
     </div>
   );
 }
