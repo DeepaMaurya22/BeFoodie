@@ -87,7 +87,7 @@ function Menu() {
   return (
     <div>
       <div className="flex">
-        <div className="section-container flex flex-wrap justify-start md:items-center md:gap-8 gap-4 flex-wrap py-8 ms-20">
+        <div className="section-container flex justify-start md:items-center md:gap-8 gap-4 flex-wrap py-8 ms-20">
           <button
             className={selectedCategory === "all" ? "active" : ""}
             onClick={showAll}
@@ -169,7 +169,7 @@ function Menu() {
               onClick={() => paginate(currentPageNumber)}
               className={`mx-1 px-3 py-1 bg-gray-200 rounded ${
                 currentPage === currentPageNumber
-                  ? "bg-blue-500 text-white"
+                  ? "bg-blue-500 text-red font-medium"
                   : ""
               }`}
             >

@@ -1,5 +1,6 @@
 import logo from "../assets/BeFoodi_brand_logo.png";
 import { Link } from "react-router-dom";
+import Modal from "./Modal";
 function Navbar() {
   const navItems = (
     <>
@@ -10,20 +11,7 @@ function Navbar() {
         <Link to="/menu">Menu</Link>
       </li>
       <li>
-        <details>
-          <summary>Services</summary>
-          <ul className="p-2">
-            <li>
-              <a>Online Order</a>
-            </li>
-            <li>
-              <a>Table Booking</a>
-            </li>
-            <li>
-              <a>Order Tracking</a>
-            </li>
-          </ul>
-        </details>
+        <Link to="/menu">Services</Link>
       </li>
       <li>
         <a>Offers</a>
@@ -121,9 +109,16 @@ function Navbar() {
               </div>
             </div>
           </div>
-          <a className="btn bg-red text-white rounded-full px-6 hover:bg-primaryBG hover:text-red hover:border-red">
-            Order now
-          </a>
+
+          {/* Login  */}
+          <button
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+          >
+            <a className="btn bg-red text-white rounded-full px-6 hover:bg-primaryBG hover:text-red hover:border-red">
+              Login
+            </a>
+          </button>
+          <Modal />
         </div>
       </div>
     </header>

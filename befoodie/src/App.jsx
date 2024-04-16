@@ -3,6 +3,7 @@ import Main from "./layout/Main";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import Menu from "./pages/Store/Menu";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/menu" element={<Menu />} />
         </Route>
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
   );

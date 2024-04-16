@@ -44,7 +44,7 @@ function MultipleItems() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 3,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -69,9 +69,9 @@ function MultipleItems() {
         {items.map((item, index) => (
           <div
             key={index}
-            className="h-[19rem] overflow-hidden w-[20rem] rounded-lg p-3 "
+            className="h-[19rem] overflow-hidden w-[15.5rem] rounded-lg p-3 "
           >
-            <div className="h-[18rem] overflow-hidden w-[20rem] rounded-lg p-3">
+            <div className="h-[18rem] overflow-hidden w-[15.5rem] rounded-lg p-3">
               <div
                 className="h-[12rem] bg-center bg-cover rounded-lg"
                 style={{ backgroundImage: `url(${item.image})` }}
