@@ -1,7 +1,12 @@
 import logo from "../assets/BeFoodi_brand_logo.png";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Profile from "./Profile";
 function Navbar() {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const navItems = (
     <>
       <li>
@@ -111,13 +116,17 @@ function Navbar() {
           </div>
 
           {/* Login  */}
-          <button
-            onClick={() => document.getElementById("my_modal_3").showModal()}
-          >
-            <a className="btn bg-red text-white rounded-full px-6 hover:bg-primaryBG hover:text-red hover:border-red">
-              Login
-            </a>
-          </button>
+          {user ? (
+            <Profile user={user} />
+          ) : (
+            <button
+              onClick={() => document.getElementById("my_modal_3").showModal()}
+            >
+              <a className="btn bg-red text-white rounded-full px-6 hover:bg-primaryBG hover:text-red hover:border-red">
+                Login
+              </a>
+            </button>
+          )}
           <Modal />
         </div>
       </div>

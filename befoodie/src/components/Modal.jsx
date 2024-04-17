@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 function Modal() {
   const {
@@ -8,7 +10,46 @@ function Modal() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const { signUpWithGmail, login } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // redirecting to home page
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
+  const onSubmit = (data) => {
+    const email = data.email;
+    const password = data.password;
+    login(email, password)
+      .then((result) => {
+        // Signed in
+        const user = result.user;
+        alert("Login successful");
+        document.getElementById("my_modal_3").close();
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage("Provide a correct email and password");
+      });
+  };
+
+  // google signin
+  const handleLogin = () => {
+    signUpWithGmail()
+      .then((result) => {
+        const user = result.user;
+        alert("login successful");
+        document.getElementById("my_modal_3").close();
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -52,6 +93,12 @@ function Modal() {
                 </a>
               </label>
             </div>
+            {/* error */}
+            {errorMessage ? (
+              <p className="text-red text-xs italic">{errorMessage}</p>
+            ) : (
+              ""
+            )}
             <div className="form-control mt-5">
               <button
                 type="submit"
@@ -79,7 +126,10 @@ function Modal() {
 
           {/* Social SignIn */}
           <div className="mb-2 flex justify-center gap-4">
-            <button className="btn btn-circle text-xl hover:text-white hover:bg-red hover:border-red">
+            <button
+              className="btn btn-circle text-xl hover:text-white hover:bg-red hover:border-red"
+              onClick={handleLogin}
+            >
               <FaGoogle />
             </button>
             <button className="btn btn-circle text-2xl hover:text-white hover:bg-red hover:border-red">

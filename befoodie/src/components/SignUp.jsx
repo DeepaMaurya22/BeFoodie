@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { useContext } from "react";
 
 function SignUp() {
   const {
@@ -10,7 +12,33 @@ function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const { createUser, signUpWithGmail } = useContext(AuthContext);
+
+  // redirecting to home page
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
+
+  const onSubmit = async (data) => {
+    const email = data.email;
+    const password = data.password;
+    console.log(email, password);
+    try {
+      const result = await createUser(email, password);
+      // Signed up successfully
+      const user = result.user;
+      alert("SignUp successful");
+      document.getElementById("my_modal_3").close();
+      navigate(from, { replace: true });
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("Email is already in use");
+      } else {
+        // Handle other errors
+        console.error(error);
+      }
+    }
+  };
   return (
     <>
       <div className="mx-auto max-w-md w-full shadow my-5 rounded-xl p-8">
