@@ -1,17 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
-
 function Profile({ user }) {
-  const { logout } = useContext(AuthContext);
+  const { logout, setUser } = useContext(AuthContext);
   const handleLogout = () => {
-    logout()
-      .then(() => {
-        // Sign-out successful.
-        alert("Logout");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // Pass setUser as a parameter
+    return logout()
+      .then(() => setUser(null))
+      .catch((error) => console.error("Logout error:", error.message));
   };
 
   return (

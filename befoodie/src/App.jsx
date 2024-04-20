@@ -6,6 +6,7 @@ import Menu from "./pages/Store/Menu";
 import SignUp from "./components/SignUp";
 import PrivateRouter from "./PrivateRouter/PrivateRouter";
 import UpdateProfile from "./pages/dashboard/UpdateProfile";
+import Cart from "./pages/Store/Cart";
 
 function App() {
   return (
@@ -13,15 +14,24 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<Home />} />
-          <Route
+          {/* <Route
             path="/menu"
             element={
               <PrivateRouter>
                 <Menu />
               </PrivateRouter>
             }
-          />
+          /> */}
+          <Route path="/menu" element={<Menu />} />
           <Route path="/update-profile" element={<UpdateProfile />} />
+          <Route
+            path="/cart-page"
+            element={
+              <PrivateRouter>
+                <Cart />
+              </PrivateRouter>
+            }
+          />
         </Route>
         <Route path="/signup" element={<SignUp />} />
       </Routes>

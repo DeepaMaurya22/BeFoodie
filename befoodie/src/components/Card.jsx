@@ -1,8 +1,84 @@
+import { useContext, useState } from "react";
+import { FaHeart } from "react-icons/fa";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Swal from "sweetalert2";
+import useCart from "../hooks/useCart";
+import { useNavigate, useLocation } from "react-router-dom";
+
 function Card({ item }) {
+  const [IsHeartFilled, setIsHeartFilled] = useState(false);
+  const { user } = useContext(AuthContext);
+  const [cart, refetch] = useCart();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleAddtoCart = (item) => {
+    const { image, title, price, _id } = item;
+    if (user && user.email) {
+      const cartItem = {
+        menuItemId: _id, // Corrected property name
+        title: title,
+        quantity: 1,
+        image: image,
+        price: price,
+        email: user.email,
+      };
+      // console.log(cartItem);
+      fetch("http://localhost:3000/carts", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(cartItem),
+      }).then((res) =>
+        res.json().then((data) => {
+          if (data.menuItemId) {
+            console.log("Item Added");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Item Added",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          refetch();
+        })
+      );
+    } else {
+      Swal.fire({
+        title: "Please Login?",
+        text: "Please create an account or login!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SignUp",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/signup", { state: { from: location } });
+        }
+      });
+    }
+  };
+
+  const handleHeartClick = () => {
+    setIsHeartFilled(!IsHeartFilled);
+  };
   return (
     <div>
-      <div className="card card-compact w-96 bg-base-100 shadow-md h-[22rem] overflow-hidden w-[20rem] rounded-lg p-3 ">
+      <div className="card card-compact bg-base-100 shadow-md h-[22rem] overflow-hidden w-[20rem] rounded-lg p-3 ">
         <figure className="h-[13rem] bg-center bg-cover rounded-md">
+          <div
+            className={`heart absolute z-10 right-4 top-4 rounded-full p-2 bg-white cursor-pointer ${
+              IsHeartFilled ? "text-rose-500" : "text-slate-500"
+            }`}
+            onClick={handleHeartClick}
+          >
+            <FaHeart />
+          </div>
+
           <img src={item.image} alt="Shoes" />
         </figure>
         <div className="card-body pb-0">
@@ -19,7 +95,10 @@ function Card({ item }) {
             {item.description}
           </p>
           <div className="card-actions justify-start">
-            <button className="btn bg-red text-white hover:bg-red">
+            <button
+              className="btn bg-red text-white hover:bg-red"
+              onClick={() => handleAddtoCart(item)}
+            >
               Add to cart
             </button>
           </div>

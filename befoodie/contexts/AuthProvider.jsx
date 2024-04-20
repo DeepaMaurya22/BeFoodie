@@ -70,6 +70,7 @@ function AuthProvider({ children }) {
     logout,
     updateuserprofile,
     loading,
+    setUser,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

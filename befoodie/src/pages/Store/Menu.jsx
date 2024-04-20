@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import data from "../../data.json";
+// import data from "../../data.json";
 import Card from "../../components/Card";
 
 function Menu() {
@@ -12,6 +12,8 @@ function Menu() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const response = await fetch("http://localhost:3000/menu");
+        const data = await response.json();
         setMenu(data);
         setFilteredItems(data);
       } catch (error) {
