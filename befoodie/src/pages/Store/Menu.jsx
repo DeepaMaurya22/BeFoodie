@@ -27,7 +27,7 @@ function Menu() {
     if (sortOption !== "default") {
       handleSortChange(sortOption);
     }
-  }, [sortOption, filteredItems]);
+  }, []);
 
   const filterDataByCategory = (category) => {
     const filteredData =
@@ -69,7 +69,7 @@ function Menu() {
     setCurrentPage(1);
   };
 
-  // // Pagination Logic
+  // Pagination Logic
   const itemsPerPage = 6;
 
   const totalItems = filteredItems.length;

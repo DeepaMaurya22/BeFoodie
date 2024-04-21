@@ -3,7 +3,7 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 function SignUp() {
   const {
@@ -13,6 +13,7 @@ function SignUp() {
   } = useForm();
 
   const { createUser, signUpWithGmail } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // redirecting to home page
   const location = useLocation();
@@ -32,13 +33,28 @@ function SignUp() {
       navigate(from, { replace: true });
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        alert("Email is already in use");
+        setErrorMessage("Email is already in use");
       } else {
         // Handle other errors
         console.error(error);
       }
     }
   };
+
+  // google signin
+  const handleLogin = () => {
+    signUpWithGmail()
+      .then((result) => {
+        const user = result.user;
+        alert("SignUp successful");
+        document.getElementById("my_modal_3").close();
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <div className="mx-auto max-w-md w-full shadow my-5 rounded-xl p-8">
@@ -80,6 +96,12 @@ function SignUp() {
                 </a>
               </label>
             </div>
+            {/* error */}
+            {errorMessage ? (
+              <p className="text-red text-xs italic">{errorMessage}</p>
+            ) : (
+              ""
+            )}
             <div className="form-control mt-5">
               <button
                 type="submit"
@@ -106,7 +128,10 @@ function SignUp() {
 
           {/* Social SignIn */}
           <div className="mb-2 flex justify-center gap-4 mt-4">
-            <button className="btn btn-circle text-xl hover:text-white hover:bg-red hover:border-red">
+            <button
+              className="btn btn-circle text-xl hover:text-white hover:bg-red hover:border-red"
+              onClick={handleLogin}
+            >
               <FaGoogle />
             </button>
             <button className="btn btn-circle text-2xl hover:text-white hover:bg-red hover:border-red">
