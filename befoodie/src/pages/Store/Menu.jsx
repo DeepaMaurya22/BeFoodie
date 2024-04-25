@@ -37,18 +37,25 @@ function Menu() {
     setFilteredItems(filteredData);
     setSelectedCategory(category);
     setCurrentPage(1);
+
+    if (sortOption !== "default") {
+      handleSortChange(sortOption, filteredData);
+    }
   };
 
   const showAll = () => {
     setFilteredItems(menu);
     setSelectedCategory("all");
     setCurrentPage(1);
+    if (sortOption !== "default") {
+      handleSortChange(sortOption, menu);
+    }
   };
 
-  const handleSortChange = (option) => {
+  const handleSortChange = (option, items = filteredItems) => {
     setSortOption(option);
 
-    let sortedItems = [...filteredItems];
+    let sortedItems = [...items];
     switch (option) {
       case "A-Z":
         sortedItems.sort((a, b) => a.title.localeCompare(b.title));
@@ -65,6 +72,7 @@ function Menu() {
       default:
         break;
     }
+
     setFilteredItems(sortedItems);
     setCurrentPage(1);
   };

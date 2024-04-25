@@ -7,6 +7,9 @@ import SignUp from "./components/SignUp";
 import PrivateRouter from "./PrivateRouter/PrivateRouter";
 import UpdateProfile from "./pages/dashboard/UpdateProfile";
 import Cart from "./pages/Store/Cart";
+import DashboardLayout from "./layout/DashboardLayout";
+import Dashboard from "./pages/dashboard/admin/Dashboard";
+import Users from "./pages/dashboard/admin/Users";
 
 function App() {
   return (
@@ -14,14 +17,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<Home />} />
-          {/* <Route
-            path="/menu"
-            element={
-              <PrivateRouter>
-                <Menu />
-              </PrivateRouter>
-            }
-          /> */}
           <Route path="/menu" element={<Menu />} />
           <Route path="/update-profile" element={<UpdateProfile />} />
           <Route
@@ -34,6 +29,17 @@ function App() {
           />
         </Route>
         <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRouter>
+              <DashboardLayout />
+            </PrivateRouter>
+          }
+        >
+          <Route path="" element={<Dashboard />} />
+          <Route path="users" element={<Users />} />
+        </Route>
       </Routes>
     </Router>
   );

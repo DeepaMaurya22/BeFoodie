@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
-const CartItem = require("./db/CartSchema");
 
 // middleware
 app.use(
@@ -25,6 +24,7 @@ db.once("open", function () {
 
 const cartController = require("./controllers/CartController");
 const menuController = require("./controllers/MenuController");
+const userController = require("./controllers/UserController");
 
 app.get("/menu", menuController.getAllMenuItems);
 
@@ -41,6 +41,11 @@ app.delete("/carts/:id", cartController.deleteCart);
 
 // Define your PUT route
 app.put("/carts/:id", cartController.updateCart);
+
+// user route
+app.get("/users", userController.getAllUser);
+app.post("/users", userController.createUser);
+app.delete("/users/:id", userController.deleteUser);
 
 // .env
 // require("dotenv").config();

@@ -3,6 +3,7 @@ import useCart from "../../hooks/useCart";
 import Swal from "sweetalert2";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const [cart, refetch] = useCart();
@@ -133,6 +134,20 @@ function Cart() {
     return total + calculatePrice(item);
   }, 0);
 
+  const totalItems = cart.length;
+  if (totalItems === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h2 className="text-3xl font-bold text-gray-700 mb-4">
+          Your cart is empty!
+        </h2>
+        <p>It looks like you haven&apos;t added any items to your cart yet.</p>
+        <Link to="/menu">
+          <button className="btn bg-red text-white mt-4">Go to Menu</button>
+        </Link>
+      </div>
+    );
+  }
   const Totalorder = calculateTotalPrice;
   return (
     <div className="section-container min-h-screen">
