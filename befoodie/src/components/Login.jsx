@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import axios from "axios";
 
-function Modal() {
+function Login() {
   const {
     register,
     handleSubmit,
@@ -48,7 +48,7 @@ function Modal() {
 
   // google signin
   const handleRegister = () => {
-    console.log("registering");
+    // console.log("registering");
     signUpWithGmail()
       .then((result) => {
         const user = result.user;
@@ -96,15 +96,14 @@ function Modal() {
   };
 
   return (
-    <>
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box ">
+    <div className="min-h-screen flex items-center">
+      <div className="mx-auto max-w-md  w-full shadow my-5 rounded-xl p-8">
+        <div className="w-4/5 mx-auto">
           <form
             method="dialog"
-            className="card-body"
+            className="p-3"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {/* <form className="card-body" onSubmit={handleSubmit(onSubmit)}> */}
             <h3 className="font-bold text-lg">Please Login!</h3>
             <div className="form-control">
               <label className="label">
@@ -153,23 +152,16 @@ function Modal() {
             </div>
             <div className="text-center text-sm mt-2">
               <p>
-                Don&apos;t have an account?
+                Have an account?
                 <Link to="/signup" className="ml-2 underline text-primary">
                   SignUp Now
                 </Link>
               </p>
             </div>
-            <button
-              htmlFor="my_modal_5"
-              onClick={() => document.getElementById("my_modal_3").close()}
-              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            >
-              ✕
-            </button>
           </form>
 
           {/* Social SignIn */}
-          <div className="mb-2 flex justify-center gap-4">
+          <div className="mb-2 flex justify-center gap-4 mt-4">
             <button
               className="btn btn-circle text-xl hover:text-white hover:bg-red hover:border-red"
               onClick={handleRegister}
@@ -181,9 +173,15 @@ function Modal() {
             </button>
           </div>
         </div>
-      </dialog>
-    </>
+        <Link
+          to="/"
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+        >
+          ✕
+        </Link>
+      </div>
+    </div>
   );
 }
 
-export default Modal;
+export default Login;

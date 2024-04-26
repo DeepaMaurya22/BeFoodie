@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { Link } from "react-router-dom";
 function Profile({ user }) {
   const { logout, setUser } = useContext(AuthContext);
   const handleLogout = () => {
@@ -8,7 +9,7 @@ function Profile({ user }) {
       .then(() => setUser(null))
       .catch((error) => console.error("Logout error:", error.message));
   };
-
+  // const isAdmin = false;
   return (
     <div>
       <div className="drawer drawer-end z-50">
@@ -48,6 +49,14 @@ function Profile({ user }) {
             <li>
               <a>Setting</a>
             </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            {/* {isAdmin && (
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+            )} */}
             <li>
               <a onClick={handleLogout}>Logout</a>
             </li>

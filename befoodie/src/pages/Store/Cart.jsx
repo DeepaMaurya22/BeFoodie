@@ -194,7 +194,17 @@ function Cart() {
                     <input
                       type="number"
                       value={item.quantity}
-                      onChange={console.log(item.quantity)}
+                      // onChange={console.log(item.quantity)}
+                      onChange={(e) => {
+                        const newQuantity = parseInt(e.target.value, 10);
+                        if (newQuantity > 0) {
+                          // Ensure quantity is positive
+                          handleIncrement({
+                            ...item,
+                            quantity: newQuantity - item.quantity,
+                          }); // Adjust based on new quantity
+                        }
+                      }}
                       className="w-10 mx-2 text-center overflow-hidden appearance-none"
                     />
                     <button

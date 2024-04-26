@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Modal from "./Modal";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useContext, useState } from "react";
+import axios from "axios";
 
 function SignUp() {
   const {
@@ -12,7 +13,8 @@ function SignUp() {
     formState: { errors },
   } = useForm();
 
-  const { createUser, signUpWithGmail } = useContext(AuthContext);
+  const { createUser, signUpWithGmail, updateuserprofile } =
+    useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
 
   // redirecting to home page
@@ -21,34 +23,52 @@ function SignUp() {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = async (data) => {
-    const email = data.email;
-    const password = data.password;
-    console.log(email, password);
+    const { email, password, name, photoURL } = data;
+    if (!name || !email || !password) {
+      setErrorMessage("Name, email, and password are required");
+      return;
+    }
     try {
+      // Create the user with Firebase
       const result = await createUser(email, password);
-      // Signed up successfully
       const user = result.user;
+
+      // Update the user profile
+      await updateuserprofile({ name, photoURL });
+
+      // Save user information to the backend
+      const userInfo = { name, email };
+      await axios.post("http://localhost:3000/users", userInfo);
+
       alert("SignUp successful");
-      document.getElementById("my_modal_3").close();
-      navigate(from, { replace: true });
+      document.getElementById("my_modal_3").close(); // Ensure the modal closes successfully
+      navigate(from, { replace: true }); // Navigate to the specified route
     } catch (error) {
+      // Handle errors more comprehensively
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage("Email is already in use");
       } else {
-        // Handle other errors
-        console.error(error);
+        console.error("Error during sign-up:", error); // Log errors
+        setErrorMessage("An error occurred during sign-up. Please try again.");
       }
     }
   };
 
   // google signin
-  const handleLogin = () => {
+  const handleRegister = () => {
     signUpWithGmail()
       .then((result) => {
         const user = result.user;
-        alert("SignUp successful");
+        const userInfo = {
+          name: result?.user?.displayName,
+          email: result.user?.email,
+          // photoURL:data.photoURL
+        };
+        axios.post("http://localhost:3000/users", userInfo).then((response) => {
+          alert("SignUp successful");
+          navigate("/", { replace: true });
+        });
         document.getElementById("my_modal_3").close();
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -65,6 +85,18 @@ function SignUp() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <h3 className="font-bold text-lg">Please Login!</h3>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Username</span>
+              </label>
+              <input
+                type="text"
+                placeholder="name"
+                className="input input-bordered"
+                required
+                {...register("name", { required: true })}
+              />
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -130,7 +162,7 @@ function SignUp() {
           <div className="mb-2 flex justify-center gap-4 mt-4">
             <button
               className="btn btn-circle text-xl hover:text-white hover:bg-red hover:border-red"
-              onClick={handleLogin}
+              onClick={handleRegister}
             >
               <FaGoogle />
             </button>

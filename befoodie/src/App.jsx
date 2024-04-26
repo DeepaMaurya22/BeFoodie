@@ -4,6 +4,7 @@ import "./App.css";
 import Home from "./pages/Home/Home";
 import Menu from "./pages/Store/Menu";
 import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 import PrivateRouter from "./PrivateRouter/PrivateRouter";
 import UpdateProfile from "./pages/dashboard/UpdateProfile";
 import Cart from "./pages/Store/Cart";
@@ -29,6 +30,7 @@ function App() {
           />
         </Route>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/dashboard"
           element={
