@@ -11,6 +11,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     methods: "GET, POST, DELETE, PUT, PATCH",
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(express.json());
@@ -30,6 +31,10 @@ const menuController = require("./controllers/MenuController");
 const userController = require("./controllers/UserController");
 
 app.get("/menu", menuController.getAllMenuItems);
+app.post("/menu", menuController.postMenuItems);
+app.delete("/menu/:id", menuController.deleteMenuItems);
+app.get("/menu/:id", menuController.singleMenuItem);
+app.patch("/menu/:id", menuController.updateMenuItem);
 
 app.post("/carts", cartController.addToCart);
 

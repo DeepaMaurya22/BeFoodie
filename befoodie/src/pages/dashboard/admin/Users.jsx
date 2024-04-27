@@ -79,8 +79,8 @@ function Users() {
   };
   return (
     <div>
-      <div className="flex items-center justify-between mx-4 w-full">
-        <h5>All Users</h5>
+      <div className="flex items-center justify-between mx-4 w-full text-2xl">
+        <h2 className="font-semibold ">All Users</h2>
         <h5>Total Users: {users.length}</h5>
       </div>
       <div>
