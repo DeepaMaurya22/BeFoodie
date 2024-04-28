@@ -50,7 +50,7 @@ function DashboardLayout() {
           <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-start justify-start">
-              <div className="flex justify-between items-center mx-auto w-full p-3">
+              <div className="flex justify-between items-center mx-auto w-full xs:p-3">
                 <label
                   htmlFor="my-drawer-2"
                   className="btn btn-primary drawer-button lg:hidden"
@@ -62,7 +62,7 @@ function DashboardLayout() {
                   Logout
                 </button>
               </div>
-              <div className="mt-5 md:mt-2 mx-4">
+              <div className=" pl-8 w-full">
                 <Outlet />
               </div>
             </div>
@@ -87,7 +87,7 @@ function DashboardLayout() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/dashboard">
+                  <Link to="/dashboard/manage-bookings">
                     <FaShoppingBag /> Manage Bookings
                   </Link>
                 </li>

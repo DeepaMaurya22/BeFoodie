@@ -18,6 +18,8 @@ function Users() {
         if (res.headers["content-type"].includes("text/html")) {
           throw new Error("Received HTML response, expected JSON");
         }
+        // console.log(res);
+        // console.log(users);
         return res.data; // Ensure it's JSON data
       } catch (err) {
         console.error("Error fetching users:", err);
@@ -79,12 +81,12 @@ function Users() {
   };
   return (
     <div>
-      <div className="flex items-center justify-between mx-4 w-full text-2xl">
+      <div className="flex items-center justify-between text-2xl md:w-[50rem] mt-5">
         <h2 className="font-semibold ">All Users</h2>
         <h5>Total Users: {users.length}</h5>
       </div>
       <div>
-        <div className="overflow-x-auto  mt-5 ">
+        <div className="overflow-x-auto mt-5 ">
           <table className="table table-zebra md:w-[50rem]">
             {/* head */}
             <thead className="bg-red text-white rounded-lg">

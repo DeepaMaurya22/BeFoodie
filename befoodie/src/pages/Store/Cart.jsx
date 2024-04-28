@@ -240,7 +240,9 @@ function Cart() {
           <h3 className="font-medium">Shopping Details</h3>
           <p>{`Total Items: ${cart.length}`}</p>
           <p>{`Total Price: $${Totalorder.toFixed(2)}`}</p>
-          <button className="btn bg-red text-white">Procceed Checkout</button>
+          <Link to="/process-checkout">
+            <button className="btn bg-red text-white">Procceed Checkout</button>
+          </Link>
         </div>
       </div>
     </div>

@@ -6,6 +6,8 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const verifyToken = require("./middleware/verifyToken");
 const verifyAdmin = require("./middleware/verifyAdmin");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 // middleware
 app.use(
   cors({
@@ -29,6 +31,9 @@ db.once("open", function () {
 const cartController = require("./controllers/CartController");
 const menuController = require("./controllers/MenuController");
 const userController = require("./controllers/UserController");
+const paymentController = require("./controllers/PaymentController");
+const adminStatsController = require("./controllers/AdminStatsController");
+const orderStatsController = require("./controllers/OrderStatsController");
 
 app.get("/menu", menuController.getAllMenuItems);
 app.post("/menu", menuController.postMenuItems);
@@ -65,6 +70,11 @@ app.patch(
   userController.makeAdmin
 );
 
+app.post("/payments", verifyToken, paymentController.postPayment);
+app.get("/payments", verifyToken, paymentController.getAllOrders);
+app.get("/payments/all", paymentController.getAllPayments);
+app.patch("/payments/:id", paymentController.updateOrderStatus);
+
 // .env
 // require("dotenv").config();
 // console.log(process.env);
@@ -82,6 +92,38 @@ app.post("/jwt", async (req, res) => {
 // middleware
 
 // console.log(verifyToken);
+
+// stripe payment
+
+// Express.js code to create a payment intent with a description
+app.post("/create-payment-intent", async (req, res) => {
+  const { price, description } = req.body;
+
+  if (!description) {
+    throw new Error("Transaction description is required");
+  }
+
+  const amount = Math.round(price * 100);
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "inr", // Adjust as needed
+      description,
+      payment_method_types: ["card"],
+    });
+
+    res.send({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error("Error creating payment intent:", error);
+    res.status(500).send({ error: "Error creating payment intent" });
+  }
+});
+
+// admin dashboard stats
+app.get("/adminStats", adminStatsController.statistics);
+app.get("/order-stats", orderStatsController.orderStats);
+app.get("/revenue-over-time", orderStatsController.revenueOverTime);
 
 app.get("/", (req, res) => {
   res.send("Hello Deepa!");

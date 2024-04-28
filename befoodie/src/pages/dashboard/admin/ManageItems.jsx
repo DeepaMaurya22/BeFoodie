@@ -36,7 +36,7 @@ function ManageItems() {
     });
   };
   return (
-    <div className="w-full sm:w-[870px]  text-2xl">
+    <div className="w-full sm:w-[870px] text-2xl mt-5">
       <h2 className="font-semibold">
         Manage All<span className="text-red font-bold"> Menu Items</span>
       </h2>

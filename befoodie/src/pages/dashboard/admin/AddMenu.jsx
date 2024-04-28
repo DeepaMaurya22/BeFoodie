@@ -48,7 +48,7 @@ function AddMenu() {
   };
 
   return (
-    <div className="w-full sm:w-[870px] px-4 mx-auto text-2xl">
+    <div className="w-full sm:w-[870px] px-4 mr-auto text-2xl mt-5">
       <h2 className="font-semibold">
         Add a New <span className="text-red font-bold">Menu Item</span>
       </h2>

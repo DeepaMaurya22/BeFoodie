@@ -14,6 +14,9 @@ import AddMenu from "./pages/dashboard/admin/AddMenu";
 import ManageItems from "./pages/dashboard/admin/ManageItems";
 import UpdateMenu from "./pages/dashboard/admin/UpdateMenu";
 import "./App.css";
+import Payment from "./pages/Store/Payment";
+import Order from "./pages/dashboard/Order";
+import ManageBookings from "./pages/dashboard/admin/ManageBookings";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +24,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "menu", element: <Menu /> },
+      { path: "order", element: <Order /> },
+      { path: "process-checkout", element: <Payment /> },
       {
         path: "cart-page",
         element: (
@@ -50,6 +55,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "", element: <Dashboard /> },
+      { path: "manage-bookings", element: <ManageBookings /> },
       { path: "manage-items", element: <ManageItems /> },
       {
         path: "update-menu/:id",
@@ -59,7 +65,7 @@ const router = createBrowserRouter([
             `http://localhost:3000/menu/${params.id}`
           );
           if (!response.ok) {
-            throw new Error("Failed to fetch menu item");
+            throw Error("Failed to fetch menu item");
           }
           return response.json(); // Return fetched data
         },
